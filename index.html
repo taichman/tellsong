@@ -263,7 +263,7 @@ footer{font-size:.8rem;color:var(--muted);padding-top:24px;border-top:1px solid 
   // Fake door
   var door=document.getElementById('door'), waitForm=document.getElementById('waitForm'), waitMsg=document.getElementById('waitMsg'), waitEmail=document.getElementById('waitEmail');
   var doorMode='buy';
-  var doorTitle=document.getElementById('doorTitle'), doorEyebrow=door.querySelector('.eyebrow'), doorLede=door.querySelector('.card > p'), msgWrap=document.getElementById('msgWrap'), waitMsgText=document.getElementById('waitMsgText');
+  var doorTitle=document.getElementById('doorTitle'), doorEyebrow=door.querySelector('.eyebrow'), doorLede=door.querySelector('.card > p:not(.eyebrow)'), msgWrap=document.getElementById('msgWrap'), waitMsgText=document.getElementById('waitMsgText');
   var buyCopy={eyebrow:'Not open yet', title:'We are not taking orders yet, and nothing was charged.', lede:'We are checking whether enough people want this before we open. If you leave your email, we will tell you the day we start, and your first song will be $39 instead of $49. No other mail.'};
   var contactCopy={eyebrow:'Contact', title:'Ask us anything.', lede:'Leave your email and a short message. One of the two of us replies, usually within a day.'};
   function setMode(m){
