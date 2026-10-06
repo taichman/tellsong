@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="A song about someone you love, written from your story. AI-composed, reviewed by a person, delivered in 24 hours. $49.">
+<meta name="robots" content="noindex">
+<title>Tellsong</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Work+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: a left-aligned two-column opener (claim + story form), then samples, price, fake door. Stacks at phone width. */
+:root{
+  --bg:#f6f5f8; --surface:#ffffff; --fg:#1d1a26; --muted:#5e5970; --line:#dcd8e6;
+  --accent:#4b2a7a; --accent-fg:#ffffff; --wave:#c98a2e; --soft:#ece7f6;
+  --display:"Instrument Serif",Georgia,"Times New Roman",serif;
+  --body:"Work Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#17141f; --surface:#211d2b; --fg:#f0edf5; --muted:#aaa3bb; --line:#3a3449;
+  --accent:#c9b3ec; --accent-fg:#1d1a26; --wave:#e0a24a; --soft:#2b2538; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#17141f; --surface:#211d2b; --fg:#f0edf5; --muted:#aaa3bb; --line:#3a3449;
+  --accent:#c9b3ec; --accent-fg:#1d1a26; --wave:#e0a24a; --soft:#2b2538; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:17px;line-height:1.55;margin:0}
+.wrap{max-width:1040px;margin:0 auto;padding-inline:20px;padding-block:0 64px}
+h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.05;text-wrap:balance;margin:0}
+h1{font-size:clamp(2.4rem,6vw,4.2rem)}
+h2{font-size:clamp(1.7rem,3.5vw,2.4rem)}
+h3{font-size:1.35rem}
+p{margin:0}
+.eyebrow{font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600}
+nav{display:flex;justify-content:space-between;align-items:center;padding-block:22px;gap:16px}
+.brand{font-family:var(--display);font-size:1.5rem;font-style:italic}
+.price-pill{font-size:.85rem;color:var(--muted)}
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:start;padding-block:28px 56px}
+.hero>*{min-width:0}
+.hero .lede{font-size:1.15rem;color:var(--muted);max-width:34ch;margin-top:18px}
+.lyric{font-family:var(--display);font-style:italic;font-size:1.35rem;line-height:1.3;margin-top:28px;padding-left:16px;border-left:3px solid var(--wave);max-width:30ch}
+.lyric small{display:block;font-family:var(--body);font-style:normal;font-size:.8rem;color:var(--muted);margin-top:8px}
+form.story{background:var(--surface);border:1px solid var(--line);padding:24px;display:flex;flex-direction:column;gap:14px}
+label{display:flex;flex-direction:column;gap:6px;font-size:.85rem;font-weight:500}
+input,textarea,select{font:inherit;font-size:1rem;color:var(--fg);background:var(--bg);border:1px solid var(--line);padding:10px 12px;width:100%;border-radius:4px}
+textarea{min-height:120px;resize:vertical}
+input:focus,textarea:focus,select:focus,button:focus-visible,a:focus-visible{outline:2px solid var(--wave);outline-offset:2px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.row>*{min-width:0}
+button{font:inherit;cursor:pointer}
+.btn{background:var(--accent);color:var(--accent-fg);border:0;padding:14px 20px;font-weight:600;font-size:1.05rem;border-radius:4px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.btn span.amt{font-family:var(--display);font-size:1.3rem;font-weight:400}
+.fine{font-size:.8rem;color:var(--muted)}
+.counter{font-size:.75rem;color:var(--muted);text-align:right}
+section{padding-block:40px;border-top:1px solid var(--line)}
+.example{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:22px}
+.sample{background:var(--surface);border:1px solid var(--line);padding:18px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.sample .story-line{font-family:var(--display);font-style:italic;font-size:1.15rem;line-height:1.3}
+.sample .meta{font-size:.8rem;color:var(--muted)}
+.play{display:flex;align-items:center;gap:10px;background:transparent;border:1px solid var(--line);padding:8px 10px;border-radius:4px;color:var(--fg);text-align:left}
+.play .dot{width:28px;height:28px;border-radius:50%;background:var(--accent);color:var(--accent-fg);display:grid;place-items:center;font-size:.8rem;flex:none}
+.wave{height:34px;width:100%}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:22px}
+.steps>div{min-width:0}
+.steps h3{margin-bottom:6px}
+.steps p{color:var(--muted);font-size:.95rem}
+.price{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center}
+.price>*{min-width:0}
+.big{font-family:var(--display);font-size:clamp(3rem,8vw,5rem);line-height:1}
+.compare{font-size:.9rem;color:var(--muted);margin-top:8px}
+ul.incl{list-style:none;padding:0;margin:14px 0 0;display:flex;flex-direction:column;gap:8px}
+ul.incl li{padding-left:22px;position:relative}
+ul.incl li::before{content:"";position:absolute;left:0;top:.6em;width:12px;height:2px;background:var(--wave)}
+.faq{display:grid;grid-template-columns:1fr 1fr;gap:24px 40px;margin-top:22px}
+.faq>div{min-width:0}
+.faq h3{font-size:1.15rem;margin-bottom:6px}
+.faq p{color:var(--muted);font-size:.95rem}
+.disclosure{font-size:.85rem;color:var(--muted);margin-top:20px;max-width:60ch}
+footer{font-size:.8rem;color:var(--muted);padding-top:24px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:8px 24px}
+/* fake door */
+.door{position:fixed;inset:0;background:rgba(20,16,30,.55);display:grid;place-items:center;padding:20px;z-index:10}
+.door .card{background:var(--surface);color:var(--fg);max-width:480px;width:100%;padding:28px;border:1px solid var(--line);display:flex;flex-direction:column;gap:14px}
+.door .card h2{font-size:1.9rem}
+.door .card p{color:var(--muted);font-size:.95rem}
+.ghost{background:transparent;border:1px solid var(--line);color:var(--fg);padding:10px 14px;border-radius:4px}
+.ok{color:var(--fg);font-weight:500}
+@media (max-width:760px){
+  .hero,.price,.faq{grid-template-columns:1fr}
+  .example,.steps{grid-template-columns:1fr}
+  .row{grid-template-columns:1fr}
+  .hero{gap:28px;padding-block:12px 40px}
+}
+@media (prefers-reduced-motion:no-preference){.door{animation:fade .18s ease-out}@keyframes fade{from{opacity:0}to{opacity:1}}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav>
+    <div class="brand">Tellsong</div>
+    <div class="price-pill">One song, $49. No subscription.</div>
+  </nav>
+
+  <div class="hero">
+    <div>
+      <p class="eyebrow">A gift for one person only</p>
+      <h1 style="margin-top:10px">A song about them, written from your story.</h1>
+      <p class="lede">Tell us a few true things about someone you love. We turn them into a finished song, in their kind of music, within 24 hours.</p>
+      <div class="lyric">
+        "Nine years of six a.m. and a thermos in the cold,<br>you never missed a lap, Mom, and now the story's told."
+        <small>From a song for a mother who drove her daughter to swim practice. Example lyric, not a customer's song.</small>
+      </div>
+    </div>
+
+    <form class="story" id="storyForm" novalidate>
+      <p class="eyebrow">Start with the story</p>
+      <div class="row">
+        <label>Who is it for?
+          <input id="recipient" name="recipient" type="text" placeholder="Mom, Dani, Grandpa Joe" autocomplete="off">
+        </label>
+        <label>Occasion
+          <select id="occasion" name="occasion">
+            <option>Birthday</option><option>Anniversary</option><option>Wedding</option><option>Just because</option><option>Retirement</option><option>New baby</option><option>In memory</option>
+          </select>
+        </label>
+      </div>
+      <label>Three or four true things about them
+        <textarea id="story" name="story" placeholder="How you met. The thing they always say. The trip that went wrong. What you'd thank them for."></textarea>
+      </label>
+      <div class="counter" id="counter">0 / 600</div>
+      <label>Their kind of music
+        <select id="style" name="style">
+          <option>Acoustic folk</option><option>Piano ballad</option><option>Country</option><option>Pop</option><option>Soul and R&amp;B</option><option>Indie rock</option><option>Latin pop</option>
+        </select>
+      </label>
+      <button class="btn" type="submit" id="buyTop" data-event="buy_click" data-where="form">
+        <span>Buy now and hear it tomorrow</span><span class="amt">$49</span>
+      </button>
+      <p class="fine">You write the story in two minutes. We deliver a full song (about 2 minutes 30) as an MP3, with lyrics, by email within 24 hours. One free revision.</p>
+    </form>
+  </div>
+
+  <section id="example">
+    <p class="eyebrow">One example, start to finish</p>
+    <h2 style="margin-top:8px">It starts as a paragraph.</h2>
+    <div class="example">
+      <div class="sample">
+        <p class="eyebrow">What you write</p>
+        <p class="story-line">"For my mom, who drove me to every 6 a.m. swim practice for nine years. She kept a thermos of tea in the car and never once complained. I made the state team my senior year and she cried in the stands."</p>
+        <p class="meta">Occasion: birthday. Style: acoustic folk.</p>
+      </div>
+      <div class="sample">
+        <p class="eyebrow">What comes back</p>
+        <p class="story-line">Verse one: "Nine years of six a.m. and a thermos in the cold,<br>you never missed a lap, Mom, and now the story's told."<br><br>Chorus: "Every mile you drove me was a mile you gave away,<br>so here's a song for all of them, and happy birthday."</p>
+        <p class="meta">A full song runs about two and a half minutes: two verses, a chorus and a bridge, sung and arranged in the style you picked, plus the lyric sheet. Delivered by email within 24 hours.</p>
+      </div>
+    </div>
+    <p class="fine" style="margin-top:14px">Example story and lyrics written by us to show the format, not a customer's song. Audio previews are not published yet.</p>
+  </section>
+
+  <section id="how">
+    <p class="eyebrow">How it works</p>
+    <div class="steps">
+      <div><h3>You tell the story</h3><p>A few sentences in your own words. Names, places, the joke only they would get. Nothing to upload.</p></div>
+      <div><h3>We write and record it</h3><p>Lyrics drawn from what you wrote, set to a melody in the style you picked. A person listens to every song before it goes out.</p></div>
+      <div><h3>You get it tomorrow</h3><p>An MP3 and the lyric sheet by email within 24 hours. Not right? One revision is included.</p></div>
+    </div>
+  </section>
+
+  <section id="price">
+    <div class="price">
+      <div>
+        <p class="eyebrow">One price</p>
+        <div class="big">$49</div>
+        <p class="compare">Custom songs recorded by session musicians run $80 to $200 and take up to a week. Ours is faster and a third of the price, because the composing is done with AI tools and checked by a person.</p>
+      </div>
+      <div>
+        <ul class="incl">
+          <li>A full song, about two and a half minutes, in the style you choose</li>
+          <li>Lyrics written from your story, with their name in it</li>
+          <li>Delivered within 24 hours as MP3 plus a lyric sheet</li>
+          <li>One free revision if a line is off</li>
+          <li>Yours to keep, share and play at the party</li>
+        </ul>
+        <button class="btn" type="button" id="buyBottom" data-event="buy_click" data-where="price" style="margin-top:20px">
+          <span>Buy now</span><span class="amt">$49</span>
+        </button>
+      </div>
+    </div>
+    <p class="disclosure">Songs are composed with AI tools and reviewed by a person before delivery. Vocals are synthesized, not recorded by a singer. We say this plainly because you are giving it to someone you love and they may ask.</p>
+  </section>
+
+  <section id="faq">
+    <p class="eyebrow">Questions</p>
+    <div class="faq">
+      <div><h3>What if I don't like it?</h3><p>One revision is included. If the second version still misses, we refund the $49.</p></div>
+      <div><h3>Can it be a surprise?</h3><p>Yes. Everything goes to your email only. Play it for them whenever you want.</p></div>
+      <div><h3>How long should my story be?</h3><p>Three or four true things is enough. The best songs come from one specific memory, not a summary of a whole life.</p></div>
+      <div><h3>Who is behind this?</h3><p>A two-person studio in Israel and the US. We build small products and run each one in the open. Our names and contact are in the footer.</p></div>
+    </div>
+  </section>
+
+  <footer>
+    <span>Tellsong is a working name of a small studio run by Amir Taichman and Omer Gotlieb.</span>
+    <span><a href="#" id="contactLink" style="color:inherit">Contact us</a></span>
+    <span>No account, no subscription, no data sold.</span>
+  </footer>
+</div>
+
+<div class="door" id="door" hidden role="dialog" aria-modal="true" aria-labelledby="doorTitle">
+  <div class="card">
+    <p class="eyebrow">Not open yet</p>
+    <h2 id="doorTitle">We are not taking orders yet, and nothing was charged.</h2>
+    <p>We are checking whether enough people want this before we open. If you leave your email, we will tell you the day we start, and your first song will be $39 instead of $49. No other mail.</p>
+    <form id="waitForm" novalidate style="display:flex;flex-direction:column;gap:10px">
+      <label>Email
+        <input id="waitEmail" name="email" type="email" placeholder="you@example.com" autocomplete="email">
+      </label>
+      <label id="msgWrap" hidden>Message
+        <textarea id="waitMsgText" name="message" style="min-height:80px" placeholder="What would you like to ask?"></textarea>
+      </label>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn" type="submit" style="flex:1;justify-content:center"><span>Tell me when it opens</span></button>
+        <button class="ghost" type="button" id="doorClose">No thanks</button>
+      </div>
+      <p class="fine" id="waitMsg" aria-live="polite"></p>
+    </form>
+  </div>
+</div>
+
+<script>
+(function(){
+  // Tracking: see track() below.
+  // Every event is a row in a Google Form/Sheet: event, detail (JSON), email (waitlist and contact only).
+  var FORM_ACTION='https://docs.google.com/forms/d/e/1FAIpQLSfofl622nkMWuXholxQalrAuPx4pHDmIS6ShNXpMj9cWcsSsA/formResponse';
+  var F_EVENT='entry.2018919289', F_DETAIL='entry.1940483660', F_EMAIL='entry.632998041';
+  var sid=(function(){ try{ var s=sessionStorage.getItem('ts_sid'); if(!s){ s=Math.random().toString(36).slice(2,10); sessionStorage.setItem('ts_sid',s);} return s; }catch(e){ return 'nosess'; } })();
+  var qs={}; try{ new URLSearchParams(location.search).forEach(function(v,k){ if(/^(utm_|fbclid|ref)/.test(k)) qs[k]=v.slice(0,80); }); }catch(e){}
+  function track(name, props, email){
+    var detail={}; for(var k in (props||{})) detail[k]=props[k];
+    detail.sid=sid; detail.t=new Date().toISOString(); detail.w=window.innerWidth; detail.ref=(document.referrer||'').slice(0,80);
+    for(var q in qs) detail[q]=qs[q];
+    try{ console.log('[tellsong]',name,JSON.stringify(detail)); }catch(e){}
+    try{
+      var fd=new FormData(); fd.append(F_EVENT,name); fd.append(F_DETAIL,JSON.stringify(detail)); fd.append(F_EMAIL,email||'');
+      // The form requires an email on every response; event-only rows carry a fixed placeholder.
+      fd.append('emailAddress',email||'events@example.com'); fd.append('fvv','1'); fd.append('pageHistory','0'); fd.append('fbzx',String(-Math.floor(Math.random()*9e18)));
+      if(navigator.sendBeacon){ navigator.sendBeacon(FORM_ACTION, fd); }
+      else { fetch(FORM_ACTION,{method:'POST',mode:'no-cors',body:fd,keepalive:true}); }
+    }catch(e){}
+  }
+  track('page_view',{});
+
+  // Story counter
+  var story=document.getElementById('story'), counter=document.getElementById('counter');
+  story.addEventListener('input',function(){ if(story.value.length>600) story.value=story.value.slice(0,600); counter.textContent=story.value.length+' / 600'; });
+
+  // Scroll-to-price event, once
+  var priceSeen=false;
+  var priceEl=document.getElementById('price');
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting&&!priceSeen){priceSeen=true;track('price_view',{});} }); },{threshold:.4}).observe(priceEl);
+  }
+
+  // Fake door
+  var door=document.getElementById('door'), waitForm=document.getElementById('waitForm'), waitMsg=document.getElementById('waitMsg'), waitEmail=document.getElementById('waitEmail');
+  var doorMode='buy';
+  var doorTitle=document.getElementById('doorTitle'), doorEyebrow=door.querySelector('.eyebrow'), doorLede=door.querySelector('.card > p'), msgWrap=document.getElementById('msgWrap'), waitMsgText=document.getElementById('waitMsgText');
+  var buyCopy={eyebrow:'Not open yet', title:'We are not taking orders yet, and nothing was charged.', lede:'We are checking whether enough people want this before we open. If you leave your email, we will tell you the day we start, and your first song will be $39 instead of $49. No other mail.'};
+  var contactCopy={eyebrow:'Contact', title:'Ask us anything.', lede:'Leave your email and a short message. One of the two of us replies, usually within a day.'};
+  function setMode(m){
+    doorMode=m; var c=(m==='contact')?contactCopy:buyCopy;
+    doorEyebrow.textContent=c.eyebrow; doorTitle.textContent=c.title; doorLede.textContent=c.lede;
+    msgWrap.hidden=(m!=='contact');
+    waitForm.querySelector('button[type=submit] span').textContent=(m==='contact')?'Send':'Tell me when it opens';
+  }
+  function openDoor(where){
+    var f=document.getElementById('storyForm');
+    setMode('buy');
+    track('buy_click',{where:where,has_story:String(story.value.trim().length>0),occasion:f.occasion.value,style:f.style.value});
+    door.hidden=false; waitEmail.focus();
+  }
+  document.getElementById('contactLink').addEventListener('click',function(e){ e.preventDefault(); setMode('contact'); track('contact_open',{}); door.hidden=false; waitEmail.focus(); });
+  document.getElementById('storyForm').addEventListener('submit',function(e){ e.preventDefault(); openDoor('form'); });
+  document.getElementById('buyBottom').addEventListener('click',function(){ openDoor('price'); });
+  document.getElementById('doorClose').addEventListener('click',function(){ door.hidden=true; track('door_dismiss',{}); });
+  waitForm.addEventListener('submit',function(e){
+    e.preventDefault();
+    var v=waitEmail.value.trim();
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)){ waitMsg.textContent='That email does not look right. Check it and try again.'; return; }
+    if(doorMode==='contact'){ track('contact',{message:(waitMsgText.value||'').slice(0,500)},v); }
+    else { track('waitlist_submit',{},v); }
+    waitForm.querySelectorAll('input,button,textarea').forEach(function(el){el.disabled=true;});
+    waitMsg.className='ok'; waitMsg.textContent=(doorMode==='contact')?'Sent. We will reply by email.':'Saved. We will email you once, on the day we open. Nothing was charged.';
+  });
+
+})();
+</script>
+</body>
+</html>
